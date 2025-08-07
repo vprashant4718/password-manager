@@ -52,13 +52,9 @@ if(req.user.id !== userId){
 }
  
 const allPass = await SavedPassword.find({userRef: userId});
-
 if(allPass){
         return res.status(200).json({message:"fetched successfully", success:true, data:allPass})
-}else{
-    console.log("user do not saved any password");
 }
-
 
 
 }catch(error){

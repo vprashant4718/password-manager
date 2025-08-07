@@ -4,7 +4,6 @@ import { IoMdAdd } from "react-icons/io";
 import { AiTwotoneEdit, AiTwotoneDelete } from "react-icons/ai";
 import { useSelector } from "react-redux"; 
 import { toast } from "react-toastify";
-import { Clipboard } from "flowbite-react";
 
 const Manager = () => {
 
@@ -16,15 +15,16 @@ const Manager = () => {
 
  const fetchPasswords = async()=>{
     try {
-        const res = await fetch(`api/password/fetchAllPassword/${currentUser?._id}`,{
+        const res = await fetch(`/api/password/fetchAllPassword/${currentUser?._id}`,{
             method:"GET"
         });
 
         const data = await res.json();
 
-        if(data.message === false){
-            toast.error(data.message);
-        }
+        // console.log(data.message)
+        // if(data.success === false){
+        //     toast.error(data.message);
+        // }
         
         setAllPasswords(data?.data);
         
@@ -59,8 +59,7 @@ useEffect(() => {
             setHideEye('Password');
             eyeSlash.classList.add('hidden');
             eyeOpen.classList.remove('hidden');
-
-            console.log(hide)
+ 
             return
         }
             
@@ -82,8 +81,7 @@ useEffect(() => {
     }
 
     const savePassword = async(e)=>{
-        e.preventDefault();
-        console.log(formData);
+        e.preventDefault(); 
 
         try{
             const res = await fetch(`/api/password/addpass/${currentUser?._id}`,{
@@ -159,7 +157,7 @@ useEffect(() => {
 
 
         <div className="passwordTable w-full h-[46vh]">
-            <h2 className="text-center text-xl font-semibold mb-4">Your Passwords</h2>
+            {allPasswords && allPasswords.length > 0?<><h2 className="text-center text-xl font-semibold mb-4">Your Passwords</h2>
             <table className="table-auto rounded-md overflow-hidden w-full">
 
                 <thead className="bg-green-600 text-white px-2 items-center text-center text-sm ">
@@ -203,7 +201,7 @@ useEffect(() => {
                     }
                     
                 </tbody>
-                </table>
+                </table></>: <h2 className="text-center text-xl font-semibold mb-4">You have not saved any passwords yet</h2>}
         </div>
 
 
