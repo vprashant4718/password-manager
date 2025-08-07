@@ -2,13 +2,15 @@ import { useState } from "react";
 import { FaEye, FaEyeSlash, FaCopy} from "react-icons/fa";
 import { IoMdAdd } from "react-icons/io";
 import { AiTwotoneEdit, AiTwotoneDelete } from "react-icons/ai";
+import { useSelector } from "react-redux"; 
+import { toast } from "react-toastify";
 
 const Manager = () => {
-    
+    const {currentUser} = useSelector((state)=> state.user);
     const [hide, setHideEye] = useState("Password");
-    const [formData, setFormData] = useState({url:"", username:"", password:""});
+    const [formData, setFormData] = useState({webUrl:"", username:"", password:""});
     
-
+console.log(currentUser?._id)
 
 
     const handleHidePassword =()=>{
@@ -49,7 +51,29 @@ const Manager = () => {
 
     const savePassword = async(e)=>{
         e.preventDefault();
-        console.log(formData)
+        console.log(formData);
+
+        try{
+            const res = await fetch(`/api/addPassword/addpass/${currentUser?._id}`,{
+                method:"post",
+                headers:{
+                    "Content-Type":"application/json"   
+                },
+                body: JSON.stringify(formData)
+            });
+
+            const data = await res.json();
+
+            if(data.success === false){
+                toast.error(data.message);
+            }
+
+            toast.success(data.message);
+
+
+        }catch(error){
+            console.log(error);
+        }
         
     }
 
@@ -73,7 +97,7 @@ const Manager = () => {
 
                 <div className='w-full '>
                     
-                    <input value={formData.url} type="text" id="url" placeholder='Enter Website URL' className='border-1 rounded-2xl border-green-600 px-4 py-1 outline-none bg-white text-black w-full' onChange={handleOnChange}/>
+                    <input value={formData.webUrl} type="text" id="webUrl" placeholder='Enter Website webUrl' className='border-1 rounded-2xl border-green-600 px-4 py-1 outline-none bg-white text-black w-full' onChange={handleOnChange}/>
                 </div>
 
                 <div className='flex flex-col justify-between w-full  items-center gap-5 sm:flex-row'>

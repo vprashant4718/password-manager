@@ -12,7 +12,7 @@ const PasswordSchema = new mongoose.Schema({
         required: true,
 
     },
-    url : {
+    webUrl : {
         type: String,
         required: true,
 
@@ -25,6 +25,6 @@ const PasswordSchema = new mongoose.Schema({
 },{timestamps:true}
 );
 
-const SavedPassword = mongoose.model('savedPass', PasswordSchema);
+const SavedPassword = mongoose.model('savedAccounts', PasswordSchema);
 
 export default SavedPassword;
