@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { FaEye } from "react-icons/fa";
-import { FaEyeSlash } from "react-icons/fa";
+import { FaEye, FaEyeSlash, FaCopy} from "react-icons/fa";
 import { IoMdAdd } from "react-icons/io";
 import { AiTwotoneEdit, AiTwotoneDelete } from "react-icons/ai";
+
 const Manager = () => {
     
     const [hide, setHideEye] = useState("Password");
@@ -63,7 +63,7 @@ const Manager = () => {
 
 
             <div className="flex flex-col items-center justify-center gap-1">
-                <h2 className=' font-bold  text-3xl'><span className='text-green-700'>&lt;</span>Pass<span className='text-green-700'>Keeper/&gt;</span></h2>
+                <h2 className=' font-bold  text-3xl'><span className='text-green-500'>&lt;</span>Pass<span className='text-green-500'>Keeper/&gt;</span></h2>
 
                 <span className='text-sm text-center'>Your Own Password Manager</span>
             </div>
@@ -72,13 +72,14 @@ const Manager = () => {
             <div className='flex flex-col justify-around items-center w-full gap-5'>
 
                 <div className='w-full '>
-                    <input value={formData.url} type="text" id="url" placeholder='Enter Website URL' className='border-1 rounded-2xl border-green-700 px-4 py-1 outline-none bg-white w-full' onChange={handleOnChange}/>
+                    
+                    <input value={formData.url} type="text" id="url" placeholder='Enter Website URL' className='border-1 rounded-2xl border-green-600 px-4 py-1 outline-none bg-white text-black w-full' onChange={handleOnChange}/>
                 </div>
 
                 <div className='flex flex-col justify-between w-full  items-center gap-5 sm:flex-row'>
-                    <input value={formData.username} type="text" id="username" placeholder='Enter Username' className='border-1 rounded-2xl border-green-700 px-4 py-1 outline-none bg-white w-full' onChange={handleOnChange}/>
+                    <input value={formData.username} type="text" id="username" placeholder='Enter Username' className='border-1 rounded-2xl border-green-700 px-4 py-1 outline-none bg-white text-black w-full' onChange={handleOnChange}/>
                    
-                    <input value={formData.password} type={hide} id="password" placeholder='Enter Password' className='border-1 rounded-2xl border-green-700 px-4 pr-10 py-1 outline-none bg-white w-full' onChange={handleOnChange}/>
+                    <input value={formData.password} type={hide} id="password" placeholder='Enter Password' className='border-1 rounded-2xl border-green-700 px-4 pr-10 py-1 outline-none bg-white text-black w-full' onChange={handleOnChange}/>
                     <span className='absolute right-0 w-12 mt-15  sm:w-36 sm:mt-0'>
                         <FaEyeSlash id="faEyeSlash" className="text-xl cursor-pointer " onClick={handleHidePassword}/>
                         <FaEye id="faeye" className="text-xl cursor-pointer hidden" onClick={handleHidePassword}/>
@@ -86,18 +87,18 @@ const Manager = () => {
 
                 </div>
 
-                <div className="btn bg-green-600 p-2 px-3 rounded-3xl text-white text-sm font-semibold flex flex-row cursor-pointer"  onClick={savePassword}>
+                <div className="btn bg-green-600 p-2 px-3 rounded-3xl text-white text-sm font-semibold flex flex-row cursor-pointer hover:bg-green-700"  onClick={savePassword}>
                    <IoMdAdd className="text-2xl"/>
-                    <button className="cursor-pointer">Add Password</button>
+                    <button className="cursor-pointer hover:bg-green-700">Add Password</button>
                 </div>
             </div>
 
 
-        <div className="passwordTable w-full">
+        <div className="passwordTable w-full h-[46vh]">
             <h2 className="text-center text-xl font-semibold mb-4">Your Passwords</h2>
             <table className="table-auto rounded-md overflow-hidden w-full">
 
-                <thead className="bg-green-800 text-white px-2 items-center text-center text-sm ">
+                <thead className="bg-green-600 text-white px-2 items-center text-center text-sm ">
                     <tr >
                     <th>Website</th>
                     <th>Username</th>
@@ -105,14 +106,31 @@ const Manager = () => {
                     <th>Actions</th>
                     </tr>
                 </thead>
-                <tbody className="bg-green-100 text-xs px-4">
+                <tbody className="bg-green-100 text-xs px-4 text-black">
                     <tr >
-                    <td className="text-center w-32">The Sliding Mr. Bones (Next Stop, Pottersville)</td>
-                    <td className="text-center w-32">Malcolm Lockyer</td>
-                    <td className="text-center w-32">1961</td>
-                    <td className="text-center w-32 flex flex-row text-lg justify-center items-center gap-2">
-                        <AiTwotoneEdit className="hover:text-blue-600 cursor-pointer " />
-                        <AiTwotoneDelete className="hover:text-red-600 cursor-pointer"/>
+                    <td className="text-center w-32 "> 
+                        <div className="flex flex-row items-center justify-center gap-2">
+                        <span>prashant.vercel.app</span>
+                        <FaCopy className="text-sm cursor-pointer"/>
+                        </div>
+                    </td>
+                    <td className="text-center w-32">
+                        <div className="flex flex-row items-center justify-center gap-2">
+                        <span>prashant</span>
+                        <FaCopy className="text-sm cursor-pointer"/>
+                        </div>
+                    </td>
+                    <td className="text-center w-32">
+                        <div className="flex flex-row items-center justify-center gap-2">
+                        <span>prcel.app</span>
+                        <FaCopy className="text-sm cursor-pointer"/>
+                        </div>
+                    </td>
+                    <td className="text-center w-32">
+                        <div className="flex flex-row text-lg justify-center items-center gap-2">
+                        <AiTwotoneEdit className="hover:text-blue-600 cursor-pointer text-xl" />
+                        <AiTwotoneDelete className="hover:text-red-600 cursor-pointer text-xl"/>
+                        </div>
                     </td>
                     </tr>
                     
