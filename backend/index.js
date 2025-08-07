@@ -25,7 +25,7 @@ app.listen(5000, (req,res)=>{
 
 app.use('/api/user', userRouter);
 app.use('/api/auth', authRouter);
-app.use('/api/addPassword', addPassword);
+app.use('/api/password', addPassword);
 
 
 app.use((err, req,res, next)=>{

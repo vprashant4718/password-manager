@@ -1,16 +1,48 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FaEye, FaEyeSlash, FaCopy} from "react-icons/fa";
 import { IoMdAdd } from "react-icons/io";
 import { AiTwotoneEdit, AiTwotoneDelete } from "react-icons/ai";
 import { useSelector } from "react-redux"; 
 import { toast } from "react-toastify";
+import { Clipboard } from "flowbite-react";
 
 const Manager = () => {
+
     const {currentUser} = useSelector((state)=> state.user);
     const [hide, setHideEye] = useState("Password");
     const [formData, setFormData] = useState({webUrl:"", username:"", password:""});
+    const [allPasswords, setAllPasswords] = useState();
     
-console.log(currentUser?._id)
+
+ const fetchPasswords = async()=>{
+    try {
+        const res = await fetch(`api/password/fetchAllPassword/${currentUser?._id}`,{
+            method:"GET"
+        });
+
+        const data = await res.json();
+
+        if(data.message === false){
+            toast.error(data.message);
+        }
+        
+        setAllPasswords(data?.data);
+        
+    } catch (error) {
+        console.log(error);
+    }
+
+}
+
+useEffect(() => {
+fetchPasswords();
+}, [])
+
+useEffect(() => {
+  allPasswords
+}, []);
+
+
 
 
     const handleHidePassword =()=>{
@@ -54,7 +86,7 @@ console.log(currentUser?._id)
         console.log(formData);
 
         try{
-            const res = await fetch(`/api/addPassword/addpass/${currentUser?._id}`,{
+            const res = await fetch(`/api/password/addpass/${currentUser?._id}`,{
                 method:"post",
                 headers:{
                     "Content-Type":"application/json"   
@@ -64,17 +96,25 @@ console.log(currentUser?._id)
 
             const data = await res.json();
 
-            if(data.success === false){
+            if(!res.ok){
                 toast.error(data.message);
             }
 
+            await fetchPasswords();
             toast.success(data.message);
-
 
         }catch(error){
             console.log(error);
         }
         
+    }
+
+
+    const copyText = (text)=>{
+      navigator.clipboard.writeText(text).then(
+        toast.info("Text Copied!")
+      )
+
     }
 
   return (
@@ -105,8 +145,8 @@ console.log(currentUser?._id)
                    
                     <input value={formData.password} type={hide} id="password" placeholder='Enter Password' className='border-1 rounded-2xl border-green-700 px-4 pr-10 py-1 outline-none bg-white text-black w-full' onChange={handleOnChange}/>
                     <span className='absolute right-0 w-12 mt-15  sm:w-36 sm:mt-0'>
-                        <FaEyeSlash id="faEyeSlash" className="text-xl cursor-pointer " onClick={handleHidePassword}/>
-                        <FaEye id="faeye" className="text-xl cursor-pointer hidden" onClick={handleHidePassword}/>
+                        <FaEyeSlash id="faEyeSlash" className="text-xl cursor-pointer text-black" onClick={handleHidePassword}/>
+                        <FaEye id="faeye" className="text-xl cursor-pointer hidden text-black" onClick={handleHidePassword}/>
                     </span>
 
                 </div>
@@ -131,23 +171,25 @@ console.log(currentUser?._id)
                     </tr>
                 </thead>
                 <tbody className="bg-green-100 text-xs px-4 text-black">
-                    <tr >
+                    {
+                        allPasswords?.map((pass)=>(
+                            <tr key={pass?._id}>
                     <td className="text-center w-32 "> 
-                        <div className="flex flex-row items-center justify-center gap-2">
-                        <span>prashant.vercel.app</span>
-                        <FaCopy className="text-sm cursor-pointer"/>
+                        <div className="flex flex-row  justify-between gap-2 px-2">
+                        <span className="truncate w-28 ">{pass?.webUrl}</span>
+                        <FaCopy className="text-sm cursor-pointer hover:text-lime-500" onClick={()=>copyText(pass?.webUrl)}/>
                         </div>
                     </td>
                     <td className="text-center w-32">
-                        <div className="flex flex-row items-center justify-center gap-2">
-                        <span>prashant</span>
-                        <FaCopy className="text-sm cursor-pointer"/>
+                        <div className="flex flex-row  justify-between gap-2 px-2">
+                        <span className="truncate w-28 ">{pass?.username}</span>
+                        <FaCopy className="text-sm cursor-pointer hover:text-lime-500" onClick={()=>copyText(pass?.username)}/>
                         </div>
                     </td>
                     <td className="text-center w-32">
-                        <div className="flex flex-row items-center justify-center gap-2">
-                        <span>prcel.app</span>
-                        <FaCopy className="text-sm cursor-pointer"/>
+                        <div className="flex flex-row  justify-between gap-2 px-2">
+                        <span className="truncate w-28 ">{pass?.password}</span>
+                        <FaCopy className="text-sm cursor-pointer hover:text-lime-500" onClick={()=>copyText(pass?.password)}/>
                         </div>
                     </td>
                     <td className="text-center w-32">
@@ -157,6 +199,8 @@ console.log(currentUser?._id)
                         </div>
                     </td>
                     </tr>
+                        ))
+                    }
                     
                 </tbody>
                 </table>
