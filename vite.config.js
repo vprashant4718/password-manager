@@ -12,7 +12,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'http://localhost:5000',  // Your backend
+        target: 'https://password-manager-seven-sigma.vercel.app/',  // Your backend
         changeOrigin: true,
         // rewrite: (path) => path.replace(/^\/api/, ''), // remove "/api" prefix
       },
