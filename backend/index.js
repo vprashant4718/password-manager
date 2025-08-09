@@ -23,9 +23,9 @@ app.listen(5000, (req,res)=>{
     console.log('Server is running on port 5000');  
 });
 
-// app.use('/', (req, res)=>{
-//     res.json({Message: "server is running"})
-// });
+app.use('/', (req, res)=>{
+    res.json({Message: "server is running"})
+});
 app.use('/api/user', userRouter);
 app.use('/api/auth', authRouter);
 app.use('/api/password', addPassword);
