@@ -5,7 +5,7 @@ import Footer from './components/Footer'
 import './index.css'
 import SignIn from './pages/SignIn';
 import SignOut from './pages/SignOut';
-import SignUp from './pages/Signup';
+import SignUp from './pages/SignUp';
 import PrivateRoute from './components/PrivateRoute';
   import { ToastContainer } from 'react-toastify';
 
