@@ -16,16 +16,11 @@ const Manager = () => {
  const fetchPasswords = async()=>{
     try {
         const res = await fetch(`${import.meta.env.VITE_API_URL}/api/password/fetchAllPassword/${currentUser?._id}`,{
-            method:"GET"
+            method:"GET",
+            credentials: "include"
         });
 
         const data = await res.json();
-
-        console.log(data.message)
-        if(data.success === false){
-            toast.error(data.message);
-        }
-        
         setAllPasswords(data?.data);
         
     } catch (error) {
