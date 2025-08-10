@@ -35,6 +35,7 @@ export default function SignIn() {
 
       const res = await fetch(`${import.meta.env.VITE_API_URL}/api/auth/sign-in`, {
         method: "POST",
+        credentials: "include",
         headers: {
           "Content-Type": "application/json",
         },

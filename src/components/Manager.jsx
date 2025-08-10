@@ -86,6 +86,7 @@ useEffect(() => {
         try{
             const res = await fetch(`${import.meta.env.VITE_API_URL}/api/password/addpass/${currentUser?._id}`,{
                 method:"post",
+                credentials: "include",
                 headers:{
                     "Content-Type":"application/json"   
                 },
