@@ -21,10 +21,10 @@ const Manager = () => {
 
         const data = await res.json();
 
-        // console.log(data.message)
-        // if(data.success === false){
-        //     toast.error(data.message);
-        // }
+        console.log(data.message)
+        if(data.success === false){
+            toast.error(data.message);
+        }
         
         setAllPasswords(data?.data);
         
