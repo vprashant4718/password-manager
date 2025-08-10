@@ -56,10 +56,15 @@ if (!email || !password || email=== '' || password=== '') {
  const jwt_token = jwt.sign({id:user._id, admin:user.isAdmin}, process.env.JWT_SECRET)
  const {password:pass, ...rest} = user._doc;
 
- res.cookie('access_token', jwt_token)
+ res.cookie("access_token",jwt_token , {
+  httpOnly: true,
+  secure: true,         // true for HTTPS (Vercel)
+  sameSite: "none",     // required for cross-origin
+  maxAge: 24 * 60 * 60 * 1000
+}); 
 
       
-    res.status(200).json(rest);
+ res.status(200).json(rest);
 
     } catch (error) {
         next(error);
