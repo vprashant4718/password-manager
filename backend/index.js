@@ -19,7 +19,6 @@ app.use(cors({
     credentials: true
 }));
 
-app.use(cors());
 mongoose.connect(process.env.MONGO_CONNECT)
 .then(()=>{console.log('Connected to Mongo')})
 .catch((err)=>{console.log(err)});
