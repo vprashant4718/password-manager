@@ -11,7 +11,7 @@ const Navbar = () => {
    const handleSignout =async()=>{
     try {
       dispatch(signOutStart())
-      const res = await fetch(`/api/auth/signout`,{
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/auth/signout`,{
         method:"GET"
       });
 

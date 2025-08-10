@@ -15,7 +15,7 @@ const Manager = () => {
 
  const fetchPasswords = async()=>{
     try {
-        const res = await fetch(`/api/password/fetchAllPassword/${currentUser?._id}`,{
+        const res = await fetch(`${import.meta.env.VITE_API_URL}/api/password/fetchAllPassword/${currentUser?._id}`,{
             method:"GET"
         });
 
@@ -84,7 +84,7 @@ useEffect(() => {
         e.preventDefault(); 
 
         try{
-            const res = await fetch(`/api/password/addpass/${currentUser?._id}`,{
+            const res = await fetch(`${import.meta.env.VITE_API_URL}/api/password/addpass/${currentUser?._id}`,{
                 method:"post",
                 headers:{
                     "Content-Type":"application/json"   
