@@ -95,7 +95,7 @@ useEffect(() => {
             const data = await res.json();
 
             if(!res.ok){
-                toast.error(data.message);
+               return toast.error(data.message);
             }
 
             await fetchPasswords();

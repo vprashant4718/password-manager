@@ -11,6 +11,14 @@ dotenv.config();
 const app = express();
 
 app.use(cookieParser());
+
+
+app.use(cors({
+    origin: "https://keepmypassword.vercel.app/", // your frontend vercel URL
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true
+}));
+
 app.use(cors());
 mongoose.connect(process.env.MONGO_CONNECT)
 .then(()=>{console.log('Connected to Mongo')})
