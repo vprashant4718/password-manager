@@ -14,7 +14,7 @@ app.use(cookieParser());
 
 
 app.use(cors({
-    origin: "https://keepmypassword.vercel.app/", // your frontend vercel URL
+    origin: "https://keepmypassword.vercel.app", // your frontend vercel URL
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true
 }));
