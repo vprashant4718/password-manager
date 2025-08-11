@@ -216,7 +216,7 @@ useEffect(() => {
                     </td>
                     <td className="text-center w-32">
                         <div className="flex flex-row text-lg justify-center items-center gap-2">
-                        <AiTwotoneEdit className="hover:text-blue-600 cursor-pointer text-xl" />
+                        {/* <AiTwotoneEdit className="hover:text-blue-600 cursor-pointer text-xl" /> */}
                         <AiTwotoneDelete className="hover:text-red-600 cursor-pointer text-xl" onClick={()=>deleteSavedPass(pass?._id)}/>
                         </div>
                     </td>
