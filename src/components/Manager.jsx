@@ -11,7 +11,7 @@ const Manager = () => {
     const [hide, setHideEye] = useState("Password");
     const [formData, setFormData] = useState({webUrl:"", username:"", password:""});
     const [allPasswords, setAllPasswords] = useState();
-    
+    const [disabled, setDisabled] = useState(false);
 
  const fetchPasswords = async()=>{
     try {
@@ -83,7 +83,7 @@ useEffect(() => {
 
     const savePassword = async(e)=>{
         e.preventDefault(); 
-
+        setDisabled(true);
         try{
             const res = await fetch(`${import.meta.env.VITE_API_URL}/api/password/addpass/${currentUser?._id}`,{
                 method:"post",
@@ -97,12 +97,14 @@ useEffect(() => {
             const data = await res.json();
 
             if(!res.ok){
-                return toast.error(data.message);
+                toast.error(data.message);
+                setDisabled(false);
+                return;
             }
             setFormData({webUrl:"", username:"", password:""});
             await fetchPasswords();
             toast.success(data.message);
-
+            setDisabled(false);
         }catch(error){
             console.log(error);
         }
@@ -174,10 +176,10 @@ useEffect(() => {
 
                 </div>
 
-                <div className="btn bg-green-600 p-2 px-3 rounded-3xl text-white text-sm font-semibold flex flex-row cursor-pointer hover:bg-green-700"  onClick={savePassword}>
+                <button className="btn bg-green-600 p-2 px-3 rounded-3xl text-white text-sm font-semibold flex flex-row cursor-pointer hover:bg-green-700"  onClick={savePassword} disabled={disabled}>
                    <IoMdAdd className="text-2xl"/>
-                    <button className="cursor-pointer hover:bg-green-700">Add Password</button>
-                </div>
+                    <span className="cursor-pointer hover:bg-green-700">Add Password</span>
+                </button>
             </div>
 
 

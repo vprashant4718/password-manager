@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import  {useDispatch, useSelector} from 'react-redux';
 import { signInFailure, signInStart, signInSuccess } from '../redux/slice/createSlice';
-import OAuth from '../components/OAuth';
+// import OAuth from '../components/OAuth';
 import { toast } from "react-toastify";
 
 
@@ -95,7 +95,7 @@ export default function SignIn() {
           )}
         </Button>
 
-        <OAuth/>
+        {/* <OAuth/> */}
     <p>Don't have account ? <Link to={'/signup'} className="text-blue-700 font-semibold">SignUp</Link></p>
 
         {/* <div className="flex flex-col gap-3">

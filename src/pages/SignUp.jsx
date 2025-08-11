@@ -1,7 +1,7 @@
 import { Alert, Button, Spinner, TextInput } from "flowbite-react";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import OAuth from "../components/OAuth";
+// import OAuth from "../components/OAuth";
 import { toast } from "react-toastify";
 
 
@@ -95,7 +95,7 @@ export default function SignUp() {
             "SignUp"
           )}
         </Button>
-        <OAuth />
+        {/* <OAuth /> */}
 
 
           <p>Already have an account ? <Link to={'/sign-in'} className="text-blue-700 font-semibold">SignIn</Link></p>

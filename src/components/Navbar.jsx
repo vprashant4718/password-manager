@@ -26,7 +26,7 @@ const Navbar = () => {
    }
   return (
    <nav className=' bg-slate-800 flex flex-row justify-around h-10 items-center '>
-        <div>
+        <div className=' cursor-pointer'>
             <h2 className=' font-bold text-white text-xl'><span className='text-green-500'>&lt;</span>Pass<span className='text-green-500'>Keeper/&gt;</span></h2>
         </div>
 
