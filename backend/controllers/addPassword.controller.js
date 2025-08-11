@@ -61,3 +61,27 @@ if(allPass){
     console.log(error);
 }
  }
+
+
+
+ 
+export const deleteSavedPass =async(req, res, next ) => {
+
+ const userId = req.params.userId;
+ const passId = req.params.passId;
+
+ try{
+if(req.user.id !== userId){
+    return next(errorHandler(403, 'Login again with Your own credentials'));
+}
+ 
+const deletePass = await SavedPassword.findByIdAndDelete({_id: passId});
+if(deletePass){
+        return res.status(200).json({message:"deleted successfully", success:true})
+}
+
+
+}catch(error){
+    console.log(error);
+}
+ }

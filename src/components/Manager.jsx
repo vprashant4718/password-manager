@@ -21,6 +21,12 @@ const Manager = () => {
         });
 
         const data = await res.json();
+
+        // console.log(data.message)
+        // if(data.success === false){
+        //     toast.error(data.message);
+        // }
+        
         setAllPasswords(data?.data);
         
     } catch (error) {
@@ -81,7 +87,6 @@ useEffect(() => {
         try{
             const res = await fetch(`${import.meta.env.VITE_API_URL}/api/password/addpass/${currentUser?._id}`,{
                 method:"post",
-                credentials: "include",
                 headers:{
                     "Content-Type":"application/json"   
                 },
@@ -91,9 +96,9 @@ useEffect(() => {
             const data = await res.json();
 
             if(!res.ok){
-               return toast.error(data.message);
+                return toast.error(data.message);
             }
-
+            setFormData({webUrl:"", username:"", password:""});
             await fetchPasswords();
             toast.success(data.message);
 
@@ -111,6 +116,29 @@ useEffect(() => {
 
     }
 
+    
+
+
+    const deleteSavedPass = async(passId)=>{
+        try {
+            const res = await fetch(`${import.meta.env.VITE_API_URL}/api/password/delete/${currentUser?._id}/${passId}`, {
+                method:"delete",
+                credentials: "include"
+            });
+
+            const data = await res.json();
+
+            if(data.success === false){
+               return toast.error(data.message);
+            }
+
+            toast.success(data.message);
+            fetchPasswords();
+        } catch (error) {
+            console.log(error);
+        }
+
+    }
   return (
     <>
     <div className="absolute top-0 -z-10 h-full w-full bg-white"><div className="absolute bottom-auto left-auto right-0 top-0 h-[500px] w-[500px] -translate-x-[30%] translate-y-[20%] rounded-full bg-[rgb(94,250,101)] opacity-50 blur-[80px]"></div></div>
@@ -152,9 +180,9 @@ useEffect(() => {
             </div>
 
 
-        <div className="passwordTable w-full h-[46vh]">
+        <div className="passwordTable w-full mb-10">
             {allPasswords && allPasswords.length > 0?<><h2 className="text-center text-xl font-semibold mb-4">Your Passwords</h2>
-            <table className="table-auto rounded-md overflow-hidden w-full">
+            <table className="table-auto rounded-md overflow-hidden  w-full">
 
                 <thead className="bg-green-600 text-white px-2 items-center text-center text-sm ">
                     <tr >
@@ -189,7 +217,7 @@ useEffect(() => {
                     <td className="text-center w-32">
                         <div className="flex flex-row text-lg justify-center items-center gap-2">
                         <AiTwotoneEdit className="hover:text-blue-600 cursor-pointer text-xl" />
-                        <AiTwotoneDelete className="hover:text-red-600 cursor-pointer text-xl"/>
+                        <AiTwotoneDelete className="hover:text-red-600 cursor-pointer text-xl" onClick={()=>deleteSavedPass(pass?._id)}/>
                         </div>
                     </td>
                     </tr>
