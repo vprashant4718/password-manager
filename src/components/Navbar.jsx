@@ -33,7 +33,7 @@ const Navbar = () => {
         <ul>
             <li className=' list-none flex flex-row gap-4 text-white items-center' >
               
-               {currentUser && <div className='flex flex-row items-center justify-center gap-3 border-gray-300 bg-gray-600 p-[2px] rounded-3xl pr-2'>
+               {currentUser && <div className='hidden sm:flex flex-row items-center justify-center gap-3  border-gray-300 bg-gray-600 p-[2px] rounded-3xl pr-2 '>
 
               <img src="https://static.vecteezy.com/system/resources/previews/005/544/718/non_2x/profile-icon-design-free-vector.jpg" alt="" width={28} height={28} className=' rounded-full'/>
                <p className='text-xs truncate md:text-sm'>{currentUser?.username}</p>

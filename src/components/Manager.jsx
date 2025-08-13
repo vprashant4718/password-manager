@@ -192,9 +192,9 @@ useEffect(() => {
             </div>
 
 
-        <div className="passwordTable w-full mb-10 overflow-scroll">
+        <div className={`passwordTable w-full mb-10 ${allPasswords && "overflow-x-scroll"}`}>
             {allPasswords && allPasswords.length > 0?<><h2 className="text-center text-xl font-semibold mb-4">Your Passwords</h2>
-            <table className="table-auto rounded-md overflow-hidden overflow-y-scroll  w-full">
+            <table className="table-auto rounded-md  w-full">
 
                 <thead className="bg-green-600 text-white px-2 items-center text-center text-sm ">
                     <tr >
