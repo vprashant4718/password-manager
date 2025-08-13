@@ -9,13 +9,13 @@ export default defineConfig({
     tailwindcss()
   ],
 
-  server: {
-    proxy: {
-      '/api': {
-        target: 'https://password-manager-seven-sigma.vercel.app',  // Your backend
-        changeOrigin: true,
-        // rewrite: (path) => path.replace(/^\/api/, ''), // remove "/api" prefix
-      },
-    },
-  },
+  // server: {
+  //   proxy: {
+  //     '/api': {
+  //       target: 'http://localhost:5000',  // Your backend
+  //       changeOrigin: true,
+  //       // rewrite: (path) => path.replace(/^\/api/, ''), // remove "/api" prefix
+  //     },
+  //   },
+  // },
 })

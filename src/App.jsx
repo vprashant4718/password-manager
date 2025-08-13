@@ -31,7 +31,7 @@ function App() {
      </Routes>
 
     <Footer />
-    <ToastContainer className={'mt-6'} autoClose={3000} theme="dark"/>
+    <ToastContainer className={'mt-14'} autoClose={3000} theme="dark"/>
      
     </BrowserRouter>
 

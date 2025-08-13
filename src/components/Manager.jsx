@@ -4,7 +4,6 @@ import { IoMdAdd } from "react-icons/io";
 import { AiTwotoneEdit, AiTwotoneDelete } from "react-icons/ai";
 import { useSelector } from "react-redux"; 
 import { toast } from "react-toastify";
-
 const Manager = () => {
 
     const {currentUser} = useSelector((state)=> state.user);
@@ -12,6 +11,7 @@ const Manager = () => {
     const [formData, setFormData] = useState({webUrl:"", username:"", password:""});
     const [allPasswords, setAllPasswords] = useState();
     const [disabled, setDisabled] = useState(false);
+    const [loading, setLoading] = useState(false);
 
  const fetchPasswords = async()=>{
     try {
@@ -83,7 +83,9 @@ useEffect(() => {
 
     const savePassword = async(e)=>{
         e.preventDefault(); 
+        setLoading(true);
         setDisabled(true);
+
         try{
             const res = await fetch(`${import.meta.env.VITE_API_URL}/api/password/addpass/${currentUser?._id}`,{
                 method:"post",
@@ -97,16 +99,22 @@ useEffect(() => {
             const data = await res.json();
 
             if(!res.ok){
+                
                 toast.error(data.message);
+                setLoading(false);
                 setDisabled(false);
                 return;
             }
             setFormData({webUrl:"", username:"", password:""});
             await fetchPasswords();
             toast.success(data.message);
+            setLoading(false);
             setDisabled(false);
         }catch(error){
+            setLoading(false);
+            setDisabled(false);
             console.log(error);
+            
         }
         
     }
@@ -124,6 +132,7 @@ useEffect(() => {
 
     const deleteSavedPass = async(passId)=>{
         try {
+            alert("are you sure! delete password")
             const res = await fetch(`${import.meta.env.VITE_API_URL}/api/password/delete/${currentUser?._id}/${passId}`, {
                 method:"delete",
                 credentials: "include"
@@ -177,15 +186,15 @@ useEffect(() => {
                 </div>
 
                 <button className="btn bg-green-600 p-2 px-3 rounded-3xl text-white text-sm font-semibold flex flex-row cursor-pointer hover:bg-green-700"  onClick={savePassword} disabled={disabled}>
-                   <IoMdAdd className="text-2xl"/>
-                    <span className="cursor-pointer hover:bg-green-700">Add Password</span>
+                   <IoMdAdd className={`text-2xl  ${loading ? "hidden" : ""}`}/>
+                    <span className="cursor-pointer hover:bg-green-700">{loading? "Saving..." : "Save Password"}</span>
                 </button>
             </div>
 
 
-        <div className="passwordTable w-full mb-10">
+        <div className="passwordTable w-full mb-10 overflow-scroll">
             {allPasswords && allPasswords.length > 0?<><h2 className="text-center text-xl font-semibold mb-4">Your Passwords</h2>
-            <table className="table-auto rounded-md overflow-hidden  w-full">
+            <table className="table-auto rounded-md overflow-hidden overflow-y-scroll  w-full">
 
                 <thead className="bg-green-600 text-white px-2 items-center text-center text-sm ">
                     <tr >
@@ -199,7 +208,7 @@ useEffect(() => {
                     {
                         allPasswords?.map((pass)=>(
                             <tr key={pass?._id}>
-                    <td className="text-center w-32 "> 
+                    <td className="text-center w-32 ">
                         <div className="flex flex-row  justify-between gap-2 px-2">
                         <span className="truncate w-28 ">{pass?.webUrl}</span>
                         <FaCopy className="text-sm cursor-pointer hover:text-lime-500" onClick={()=>copyText(pass?.webUrl)}/>
@@ -213,7 +222,7 @@ useEffect(() => {
                     </td>
                     <td className="text-center w-32">
                         <div className="flex flex-row  justify-between gap-2 px-2">
-                        <span className="truncate w-28 ">{pass?.password}</span>
+                        <span className="truncate w-28 ">{"*".repeat(pass?.password.length).slice(0,6)}</span>
                         <FaCopy className="text-sm cursor-pointer hover:text-lime-500" onClick={()=>copyText(pass?.password)}/>
                         </div>
                     </td>
@@ -230,8 +239,6 @@ useEffect(() => {
                 </tbody>
                 </table></>: <h2 className="text-center text-xl font-semibold mb-4">You have not saved any passwords yet</h2>}
         </div>
-
-
 
 
         </div>

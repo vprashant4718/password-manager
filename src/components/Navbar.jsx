@@ -32,18 +32,16 @@ const Navbar = () => {
 
         <ul>
             <li className=' list-none flex flex-row gap-4 text-white items-center' >
-               {currentUser && 
-               <Link to={'/'}> Home</Link>
-               }
+              
                {currentUser && <div className='flex flex-row items-center justify-center gap-3 border-gray-300 bg-gray-600 p-[2px] rounded-3xl pr-2'>
 
               <img src="https://static.vecteezy.com/system/resources/previews/005/544/718/non_2x/profile-icon-design-free-vector.jpg" alt="" width={28} height={28} className=' rounded-full'/>
-               <p >{currentUser?.username}</p>
+               <p className='text-xs truncate md:text-sm'>{currentUser?.username}</p>
                </div>}
                
             { currentUser && currentUser?
-               (<button  className=' flex flex-row  items-center justify-center bg-red-600 p-2 rounded-2xl px-3 font-semibold cursor-pointer hover:bg-red-700 text-lg'>
-              <LuLogOut onClick={handleSignout}/> </button>)
+               (<button onClick={handleSignout} className=' flex flex-row  items-center justify-center bg-red-600 p-2 rounded-2xl px-3 font-semibold cursor-pointer hover:bg-red-700 text-lg'>
+              <LuLogOut /> </button>)
                 : (<Link to={'/sign-in'} className=' underline'>Sign In </Link>)
             }
                
