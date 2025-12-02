@@ -14,7 +14,8 @@ app.use(cookieParser());
 
 
 app.use(cors({
-    origin: "https://keepmypassword.vercel.app", // your frontend vercel URL
+    origin: true, // your frontend vercel URL
+    // origin: "https://keepmypassword.vercel.app", // your frontend vercel URL
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true
 }));
@@ -30,9 +31,9 @@ app.listen(5000, (req,res)=>{
     console.log('Server is running on port 5000');  
 });
 
-app.use('/', (req, res)=>{
-    res.json({Message: "server is running"})
-});
+// app.use('/', (req, res)=>{
+//     res.json({Message: "server is running"})
+// });
 app.use('/api/user', userRouter);
 app.use('/api/auth', authRouter);
 app.use('/api/password', addPassword);
