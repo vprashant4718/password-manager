@@ -20,10 +20,11 @@ app.use(cors({
     credentials: true
 }));
 
-mongoose.connect(process.env.MONGO_CONNECT)
-.then(()=>{console.log('Connected to Mongo')})
-.catch((err)=>{console.log(err)});
 
+mongoose
+  .connect(process.env.MONGO_CONNECT, { useNewUrlParser: true, useUnifiedTopology: true })
+  .then(() => console.log("MongoDB Connected Successfully"))
+  .catch((err) => console.error("MongoDB Connection Error:", err.message));
 
 
 app.use(express.json());
